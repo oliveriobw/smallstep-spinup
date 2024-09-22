@@ -6,7 +6,8 @@
 # 
 
 [ "" == "${1}" ] && echo pass pki_name && exit 1 
-
+EXTRA_CONFIG=' --dns=12345.local '
+#EXTRA_CONFIG=""
 PKI_NAME="${1}"
 VOLUME="`pwd`/deploy/${PKI_NAME}_vol/"
 TMP_CONTAINER=${PKI_NAME}_tmp
@@ -25,7 +26,11 @@ echo "Adding files to volume..."
 docker run -d --rm --name ${TMP_CONTAINER} -v ${VOLUME}:/home/step smallstep/step-ca tail -f /dev/null
 
 echo "copy ..."
-cat remote.sh  | sed "s/PKI_NAME/$PKI_NAME/g" > /tmp/a.sh
+cat remote.sh  | \
+     sed "s/PKI_NAME/$PKI_NAME/g"         | \
+     sed "s/EXTRA_CONFIG/$EXTRA_CONFIG/g"   \
+    > /tmp/a.sh
+
 chmod +x /tmp/a.sh
 docker cp /tmp/a.sh    ${TMP_CONTAINER}:/home/step/init.sh
 docker cp password.ini ${TMP_CONTAINER}:/home/step/password.ini
@@ -38,12 +43,15 @@ echo "initialise pki ${PKI_NAME}"
 docker run -it --rm -v ${VOLUME}:/home/step smallstep/step-ca ./init.sh
 
 # configure CA
+echo "Updating ${cfg} ..."
 cat ${cfg} \
     | jq '.authority.provisioners[0].claims.minTLSCertDuration="5s"'   \
     | jq '.authority.provisioners[0].claims.maxTLSCertDuration="8760h"'   \
     | jq '.authority.provisioners[0].claims.defaultTLSCertDuration="8760h"'   \
     | jq '.authority.provisioners[0].claims.disableRenewal="false"'   \
     >${tmp}
+
+echo "Copy ${tmp} -> ${cfg}"    
 cp -v ${tmp} ${cfg}    
 
 # shell (opt)

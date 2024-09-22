@@ -4,10 +4,13 @@
 #   DNSes can be added later with addDNS.sh
 #
 
+echo "PKI name is \"PKI_NAME\""
+
+
 step ca init \
     --deployment-type=standalone \
     --name=PKI_NAME \
-    --dns=localhost --dns=127.0.0.1 --dns=some.fqdn.local   \
+    --dns=localhost --dns=127.0.0.1 --dns=some.fqdn.local  EXTRA_CONFIG \
     --address=:9100 \
     --provisioner=admin \
     --issuer="Your Issuer"  \
