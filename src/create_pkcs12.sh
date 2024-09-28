@@ -20,6 +20,5 @@
     $ossl pkcs12 -export -nodes -in ${1} -inkey ${2} -out ${3} -name "User Certificate" -passout pass:
 
     # unencrypted no pwd
-    $ossl pkcs12 -export -keypbe NONE -certpbe NONE -nomaciter -out ${3}.2 -inkey ${2} -in ${1} -name CA_SubCA -passout pass:
+    #$ossl pkcs12 -export -keypbe NONE -certpbe NONE -nomaciter -out ${3}.2 -inkey ${2} -in ${1} -name CA_SubCA -passout pass:
 
-    
