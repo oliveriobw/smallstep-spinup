@@ -27,7 +27,7 @@
 
         #The next step is to create the CSR. But make sure that you enter the domain name 
         # the server as common Name (in this example: commonName=www.example.com).
-        $ossl req -new -key ${domain}/private/server.key -out ${domain}/server.csr -config tmp.cfg \
+        $ossl req -new -key ${domain}/private/server.key -out ${domain}/server.csr -config pki.cfg \
                 -subj "${SUBJECT}/CN=${domain}" 
 
         echo 3.3
@@ -40,7 +40,7 @@
         # echo last=${lastSerialNumber}
         # echo '$lastSerialNumber' > ./SubCA/serial
 
-        $ossl ca -rand_serial -batch -name CA_SubCA -in ${domain}/server.csr -out ${domain}/certs/server.crt  -extensions server_cert -config tmp.cfg
+        $ossl ca -rand_serial -batch -name CA_SubCA -in ${domain}/server.csr -out ${domain}/certs/server.crt  -extensions server_cert -config pki.cfg
         echo 3.4
 
         # $1 - crt [IN]

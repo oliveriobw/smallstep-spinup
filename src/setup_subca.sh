@@ -32,7 +32,7 @@
 
     echo 2.2
     echo Now we can create the CSR:
-    $ossl req -new -key ${BASE}/private/subca.key -out ${BASE}/subca.csr -config tmp.cfg  \
+    $ossl req -new -key ${BASE}/private/subca.key -out ${BASE}/subca.csr -config pki.cfg  \
             -subj "${SUBJECT}/CN=$1 Intermediate X1" 
 
 
@@ -44,7 +44,7 @@
     echo '01' > ./${ROOT}/serial
 
     # batch avoids sign prompt
-    $ossl ca -batch -name CA_RootCA -in ${BASE}/subca.csr -out ${BASE}/subca.crt -extensions subca_cert -config tmp.cfg \
+    $ossl ca -batch -name CA_RootCA -in ${BASE}/subca.csr -out ${BASE}/subca.crt -extensions subca_cert -config pki.cfg \
             -subj "${SUBJECT}/CN=$1 Intermediate X1" 
     create_pkcs12.sh ${BASE}/subca.crt ${BASE}/private/subca.key ${BASE}/subca.pfx 
 

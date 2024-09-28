@@ -17,7 +17,7 @@
     # certificate in PKCS#12 format. This format contains the public and private key. 
     # You have to enter a (backup) passphrase for exported certificate, to protect you private key.
     # Encrypted with empty string password
-    $ossl pkcs12 -export -nodes -in ${1} -inkey ${2} -out ${3} -name "User Certificate" -passout pass:
+    $ossl pkcs12 -export -in ${1} -inkey ${2} -out ${3} -name "User Certificate" -passout pass:
 
     # unencrypted no pwd
     #$ossl pkcs12 -export -keypbe NONE -certpbe NONE -nomaciter -out ${3}.2 -inkey ${2} -in ${1} -name CA_SubCA -passout pass:

@@ -31,9 +31,9 @@
     #args=" -e ALTNAME='DNS:www.example.com, DNS:www2.example.com' "
     ls -la $CONFIG
     cat ${CONFIG} | sed 's|$ENV::ALTNAME|DNS:www.our-team.co.uk, DNS:www.our-it.co.uk|1' \
-                       | sed "s|\$ENV::HOME/.rnd|${BASE}/private/.rootca.rand|1" >tmp.cfg
+                       | sed "s|\$ENV::HOME/.rnd|${BASE}/private/.rootca.rand|1" >pki.cfg
 
-    $ossl req -new -x509 -days 3650 -key ${BASE}/private/rootca.key -out ${BASE}/rootca.crt -config tmp.cfg  \
+    $ossl req -new -x509 -days 3650 -key ${BASE}/private/rootca.key -out ${BASE}/rootca.crt -config pki.cfg  \
         -subj "${SUBJECT}/CN=${1} Root X1"  
 
     echo 1.2           
