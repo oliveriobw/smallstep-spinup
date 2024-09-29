@@ -14,7 +14,7 @@ See ./deploy/\<my-pki-name>/ for config, certificates, keys, secrets, database e
 
 ### Test TLS
 1. cd src
-2. ./test_srv.sh.h \<pki> \<domain> 
+2. ./test_srv.sh \<pki> \<domain> 
 
 
 
