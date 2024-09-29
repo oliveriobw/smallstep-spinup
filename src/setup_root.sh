@@ -26,9 +26,6 @@
     $ossl genrsa -out ${BASE}/private/rootca.key -rand ${BASE}/private/.rootca.rand
 
     echo 1.1
-    #   ss root cert
-    #export ALTNAME="DNS:www.example.com, DNS:www2.example.com"
-    #args=" -e ALTNAME='DNS:www.example.com, DNS:www2.example.com' "
     ls -la $CONFIG
     cat ${CONFIG} | sed 's|$ENV::ALTNAME|DNS:www.our-team.co.uk, DNS:www.our-it.co.uk, IP:0.0.0.0|1' \
                        | sed "s|\$ENV::HOME/.rnd|${BASE}/private/.rootca.rand|1" >pki.cfg

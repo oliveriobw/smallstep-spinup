@@ -22,4 +22,5 @@
     ossl="docker run -ti --rm -v ${outdir}:/apps -w /apps alpine/openssl"
     mkdir -p -m 777 ${BASE}/crl/
     echo '01' > ${BASE}/crlnumber
+    touch ${BASE}/index.txt
     $ossl ca -rand_serial -name CA_SubCA -gencrl -out ${BASE}/crl/crl.pem -config pki.cfg

@@ -1,5 +1,8 @@
 # OpenSSL PKI
 
+### Dependencies
+```docker pull alpine/openssl```
+
 ### Create a Local PKI and server certificates
 
 See ./deploy/\<my-pki-name>/ for config, certificates, keys, secrets, database etc
