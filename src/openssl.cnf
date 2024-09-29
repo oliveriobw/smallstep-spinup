@@ -168,11 +168,12 @@ crlDistributionPoints=URI:http://crl1.example.com/my.crl # CHANGE THIS
 [ server_cert ]
 basicConstraints=CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment, dataEncipherment
-extendedKeyUsage = serverAuth
+extendedKeyUsage = serverAuth, clientAuth, serverAuth
 # add subject Altname
 # IMPORTANT: You have to set the environment variable "ALTNAME", e.g.
 # export ALTNAME="DNS:www.example.com, DNS:www2.example.com"
 subjectAltName=$ENV::ALTNAME
+tlsfeature = status_request
 # URI of the CA certificate 
 authorityInfoAccess = caIssuers;URI:http://my.ca/ca.html # CHANGE URI
 # URI of the CRL 

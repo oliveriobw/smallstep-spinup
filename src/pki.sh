@@ -21,7 +21,7 @@
 [ "" == "$1" ] && echo pki name needed && exit 
 
 PATH=$PATH:`pwd`
-export SUBJECT="/C=GB/O=Our Research Group/OU=IT Department"
+export SUBJECT="/C=GB/O=_Our Research Group/OU=IT Department"
 
 mkdir -p -m 777 deploy/${1}
 export CONFIG="`pwd`/openssl.cnf"

@@ -43,18 +43,21 @@
         $ossl ca -rand_serial -batch -name CA_SubCA -in ${domain}/server.csr -out ${domain}/certs/server.crt  -extensions server_cert -config pki.cfg
         echo 3.4
 
-        # $1 - crt [IN]
-        # $2 - pvt key [IN]
-        # $3 - pfx [OUT]
+        #create pfx
         create_pkcs12.sh ${domain}/certs/server.crt ${domain}/private/server.key ${domain}/certs/server.pfx 
 
-        # echo "run dummy server on port 44330 to test tls"
-        # docker network 
-        # $osslweb s_server -key ${domain}/private/server.key -cert ${domain}/certs/${domain}.crt -accept 44330 -www
+        #version 3 certificate der
+        $ossl x509 -outform der -in ${domain}/certs/server.crt -out ${domain}/certs/server.der
 
-        # echo "testing"
-        # ${ossl} s_client -connect localhost:44330
+        echo 3.5
+        # full-chain 
+        create_chain.sh ${domain}
 
-        # echo kill 
-        # read n
-        # docker kill websrv
+        # verifies the SubCA cert 
+        echo verify SubCA cert
+        ${ossl} verify -CAfile ${domain}/certs/full-chain.pem ./SubCA/subca.crt 
+
+        # verifies the Server cert
+        echo Verify server cert
+        ${ossl} verify -CAfile ${domain}/certs/full-chain.pem ${domain}/certs/server.crt
+

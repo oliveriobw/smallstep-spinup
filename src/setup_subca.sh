@@ -22,7 +22,6 @@
 
     echo "Create a sub ca certificate (signed by the root ca):"
     # intermediate : rand ; key; csr ; sign csr ; 
-    echo rand seed
     $ossl rand -out ${BASE}/.randSubCA 8192
     echo 2.1
 

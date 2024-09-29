@@ -30,7 +30,7 @@
     #export ALTNAME="DNS:www.example.com, DNS:www2.example.com"
     #args=" -e ALTNAME='DNS:www.example.com, DNS:www2.example.com' "
     ls -la $CONFIG
-    cat ${CONFIG} | sed 's|$ENV::ALTNAME|DNS:www.our-team.co.uk, DNS:www.our-it.co.uk|1' \
+    cat ${CONFIG} | sed 's|$ENV::ALTNAME|DNS:www.our-team.co.uk, DNS:www.our-it.co.uk, IP:0.0.0.0|1' \
                        | sed "s|\$ENV::HOME/.rnd|${BASE}/private/.rootca.rand|1" >pki.cfg
 
     $ossl req -new -x509 -days 3650 -key ${BASE}/private/rootca.key -out ${BASE}/rootca.crt -config pki.cfg  \
