@@ -19,17 +19,11 @@ ossl="docker run --network=ossl_test -ti --rm -v ${outdir}:/apps -w /apps alpine
 osslweb="docker run -d --network=ossl_test --name ossl_websrv -p 44330:44330 -ti -v ${outdir}:/apps -w /apps alpine/openssl"
 path="./deploy/${pki}/${domain}"
 
-docker network create ossl_test
+docker network create ossl_test 2>/dev/null
 docker container rm -f ossl_websrv
-echo $osslweb s_server -key ${path}/private/server.key -cert ${path}/certs/server.crt -accept 44330 -www
-#$osslweb s_server -key ${path}/private/server.key -cert ${path}/certs/server.crt -accept 44330 -www -tls1_3
 
-#test full-chain
 $osslweb s_server -key ${path}/private/server.key -cert ${path}/certs/server.crt -CAfile ${path}/certs/full-chain.pem -accept 44330 -www -tls1_3
-echo Server runnning
-
-# echo "test hostname"
-# ${ossl} s_client -connect  ossl_websrv:44330 -verify_hostname ${domain} -servername ${domain}
+echo "Server runnning TLS 1.3 (${path}/certs/server.crt ${path}/certs/full-chain.pem poer 44330)"
 
 echo "Test tls"
 #${ossl} s_client -CApath ./deploy/${pki}/RootCA/private/  -connect ossl_websrv:44330
